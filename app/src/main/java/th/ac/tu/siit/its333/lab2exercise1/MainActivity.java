@@ -2,10 +2,12 @@ package th.ac.tu.siit.its333.lab2exercise1;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -28,6 +30,12 @@ public class MainActivity extends ActionBarActivity {
 
     public void recalculate() {
         //Calculate the expression and display the output
+
+        //Split expr into numbers and operators
+        //e.g. 123+45/3 --> ["123", "+", "45", "/", "3"]
+        //reference: http://stackoverflow.com/questions/2206378/how-to-split-a-string-but-also-keep-the-delimiters
+        String e = expr.toString();
+        String[] tokens = e.split("((?<=\\+)|(?=\\+))|((?<=\\-)|(?=\\-))|((?<=\\*)|(?=\\*))|((?<=/)|(?=/))");
     }
 
     public void digitClicked(View v) {
@@ -45,10 +53,24 @@ public class MainActivity extends ActionBarActivity {
         //IF the last character in expr is not an operator and expr is not "",
         //THEN append the clicked operator and updateExprDisplay,
         //ELSE do nothing
+        if (expr.length() > 0) {
+            char c = expr.charAt(expr.length()-1);
+            if (c != '+' && c != '-' && c != '*' && c != '/') {
+                String d = ((TextView)v).getText().toString();
+                expr.append(d);
+                updateExprDisplay();
+            }
+        }
     }
 
     public void ACClicked(View v) {
         //Clear expr and updateExprDisplay
+        expr = new StringBuffer();
+        updateExprDisplay();
+        //Display a toast that the value is cleared
+        Toast t = Toast.makeText(this.getApplicationContext(),
+                "All cleared", Toast.LENGTH_SHORT);
+        t.show();
     }
 
     public void BSClicked(View v) {
