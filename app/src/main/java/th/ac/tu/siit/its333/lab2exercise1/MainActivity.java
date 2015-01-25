@@ -53,14 +53,6 @@ public class MainActivity extends ActionBarActivity {
         //IF the last character in expr is not an operator and expr is not "",
         //THEN append the clicked operator and updateExprDisplay,
         //ELSE do nothing
-        if (expr.length() > 0) {
-            char c = expr.charAt(expr.length()-1);
-            if (c != '+' && c != '-' && c != '*' && c != '/') {
-                String d = ((TextView)v).getText().toString();
-                expr.append(d);
-                updateExprDisplay();
-            }
-        }
     }
 
     public void ACClicked(View v) {
